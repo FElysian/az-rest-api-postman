@@ -1,0 +1,592 @@
+{
+	"info": {
+		"_postman_id": "56e5d1c9-7c22-484d-bfda-103db040249a",
+		"name": "Azure.REST.API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Auth.Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "grant_type",
+									"value": "client_credentials",
+									"type": "text"
+								},
+								{
+									"key": "client_id",
+									"value": "{{az.client.id}}",
+									"type": "text"
+								},
+								{
+									"key": "client_secret",
+									"value": "{{az.client.secret}}",
+									"type": "text"
+								},
+								{
+									"key": "resource",
+									"value": "https://management.azure.com/",
+									"type": "text"
+								},
+								{
+									"key": "scope",
+									"value": "user_impersonation",
+									"type": "text",
+									"disabled": true
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://login.microsoftonline.com/{{az.tenant.id}}/oauth2/token",
+							"protocol": "https",
+							"host": [
+								"login",
+								"microsoftonline",
+								"com"
+							],
+							"path": [
+								"{{az.tenant.id}}",
+								"oauth2",
+								"token"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "API.Management.Service",
+			"item": [
+				{
+					"name": "SubscriptionKeys",
+					"item": [
+						{
+							"name": "SubcriptionsKey.CreateOrUpdate",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6ImtnMkxZczJUMENUaklmajRydDZKSXluZW4zOCIsImtpZCI6ImtnMkxZczJUMENUaklmajRydDZKSXluZW4zOCJ9.eyJhdWQiOiJodHRwczovL21hbmFnZW1lbnQuY29yZS53aW5kb3dzLm5ldC8iLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC9kZmJjYzE3OC1iY2NmLTQ1OTUtOGY4ZS0zYTMxNzVkZjkwYjcvIiwiaWF0IjoxNjA2MzI1OTc3LCJuYmYiOjE2MDYzMjU5NzcsImV4cCI6MTYwNjMyOTg3NywiYWNyIjoiMSIsImFpbyI6IkFTUUEyLzhSQUFBQThJdVRWbERKZ3FpK1QzQy8vcHF5djYxNExrczhydENoWElQczI2TXFMMDQ9IiwiYW1yIjpbInB3ZCJdLCJhcHBpZCI6IjA0YjA3Nzk1LThkZGItNDYxYS1iYmVlLTAyZjllMWJmN2I0NiIsImFwcGlkYWNyIjoiMCIsImRldmljZWlkIjoiZDQ1MDk4MTEtYTY4MC00OTVkLWE0MTYtNmVmMGQxY2FlNDYxIiwiZmFtaWx5X25hbWUiOiJDaGF2ZXMiLCJnaXZlbl9uYW1lIjoiR29uw6dhbG8iLCJncm91cHMiOlsiMzZlZTYyNzUtODhkYS00ZTBiLWI2MWQtYzEyNGExY2I1YTgzIiwiMTBmZjI3OWMtYWM3Zi00ZjQwLTg5Y2QtZTRjYjA5NzAwYjAzIiwiNzBjNjYxMjYtYzgwNi00NGU4LTgzMGYtNmU2YjRlNWMxYjdmIiwiYjBjMjMxNGMtNjgwMi00NzM2LWFlODItZjc2NjAyNTczZjE5IiwiMDk0ZTUwZDYtMzViOS00NjQ5LTgxMmUtYWVkZWQxZWE4ZGE0IiwiODEzMDViZjMtZjMzZi00NGJkLWE4MjctODI5ZDRkMGExMzI4IiwiOTRmZDRjMjQtOTc4Yi00NjczLWE3NmYtYWMwMjdjZTRhMjVmIiwiODMxMDJkY2UtNzgxYy00M2VkLWE4NTAtYjVkMWM2MjcxNWEwIiwiMTI0NGZmMzYtMDA3My00NTVmLWFiYjctZjA0YzA0N2Y5YjYyIiwiZDNjZTJmYWYtZmMzZC00NWViLTllNzQtMmE5MzI3ZTc3YzM0IiwiZGU0MTZlZjYtYjk3ZC00MzllLTg1MjYtMDhjNGFjNTQwMzZmIiwiODFiMWViODYtZTBmOC00ZmMxLWFmNDUtMmJiMGZlNjM3MzdlIiwiNDkwMGY4ZTgtYjM4Ni00NmFiLTk3ZjMtNmE4NWU3NmVlMDc4IiwiYTM3MWZlYjktNTgzMS00NjI3LTlhOTgtOTI1ZGEwOTQxMTM0IiwiYWUzNDdmMmUtNWRlYS00YzRkLTg0ZTctYmQyMzFhMmU4MzA2IiwiM2NiNzc1MjQtZTkzMi00MjA0LWIyMzMtZDllMzRmMWU2OGFlIiwiOTY1MmIwNjMtNjcyMS00MGQyLWI3N2UtMDZhNmRhMmM5YzRlIiwiZDMzZDUyNGMtMTA1Ni00MGQyLTgxZmYtYzM3ZjU4MzdlMDAwIiwiNDI0ZDhkYjYtMzk0Yy00ZjYzLWE1MWYtODAwZTE4MDg1NTc1IiwiNDc2Y2UwZTItNjFlNC00YWQ4LTg4NzUtNGEyOGJjOTcxNzBhIiwiOWE0MmQyNjQtM2E2Mi00YTk0LTgxMDctMjIyMzE5OWZiMjI5IiwiYjY4NjIwMmItMjZmOC00NTQzLWFmN2YtYjcyNDgxYTdlNTk4IiwiMWZlMTJlM2EtMmZlZC00YzQ3LTg2M2UtOTJkZmNjNjQ0MmIwIiwiYmFmNTJiMDAtYjE0Yi00MTA4LTllMTgtODdhMjZlMDI1MGViIiwiMmFiMWM2ZGItYzI4Zi00NmIyLTllN2QtNjIxYzczYjE2ODQ5IiwiNWZiOTg3NzEtZDJhOS00Y2ZlLTlmYTEtZTVmYzA0NzBhYjY2IiwiNmNmNmZlNzUtYTM4MS00MjhmLWE2OWQtN2U1NWYyY2ZmYTQ5IiwiYzgzNDlhZjQtODgwMC00MDA0LTk0ZTktNjRmNGJhNjdiYWI4IiwiNzdiNzk3MDItOTgzOS00OTM1LWI0ZTEtMzIwNzAyMjYxMzY5IiwiZGQ3NzE2YTMtMWMwZC00MmE0LWIxODYtMTQ0ZmM4YmY5OTUyIiwiNWQ4YzFkMWUtYjVjYy00MzVjLWFjNDQtYTNhYTMxZjMxNjk2IiwiMGZmMTQxOWItYmYxYy00NWExLWIzM2ItZGE4NDU2ODdhYjAxIiwiZjVhNzAwYWYtZDU0MC00Y2I5LTlhYTUtNmI3ZGE2YTM2YzJjIiwiZDJiNGVlZmMtNDM3MC00Njg3LWJlNjUtZmE1NGIzY2U2M2ZiIiwiNjI4OGRhOGYtYzM1Yy00NWYwLTk2NjUtYzZhNzQxZmM4ODc4IiwiMTdlNTNjYTUtNWY5ZS00ZjMzLWI5YzktNGIxYWM0MzA2N2E2IiwiMzJjOGFlNDgtNDY2Yy00ZjUyLTk0OTctN2VlYzUyN2M2NTgzIiwiZDMzNmE0ZjktNTkxYS00MzdiLWI4NjItMGIxNjIyNTdjMTJlIiwiZjk5N2Q0ZjMtMDQ1Ni00YTdmLWE2N2MtMTJlNjNiNzZjM2QyIiwiNTM3MWIzMGYtMzY0MS00YTUwLTkwYzAtZmZiOTEwNmQ4ZTFhIiwiNTNhZGU4NDYtMTM2ZS00OGQ2LWJiYzItNWU0MDBiNDliNWZmIiwiMDFhZjI0ZDItYWM0My00NjhjLWFlMDAtYzQzMGNiYjNlNDY5IiwiOWU3Mjg3NGMtYzY4Yy00NzZjLTgzOTktNGE5ZWM3ZTFjN2RjIiwiMzRiYWRkMzItYzE1OS00YjFiLTlhNzgtMjEyYmFlYThjNGE1IiwiNTE1YmIzNzEtMjY4ZC00NjE2LTkwYjktZjQwNTQwNTNlN2Q0IiwiNjdhYzE1ZTQtNzVjMy00NjEwLWE1NjEtMzcwZjZiOTMyODE1IiwiMjMxYjdhNTYtZmRiNi00M2QyLTk5NDctOGFjN2IwN2JkYmI5IiwiOTc1YjJlNzEtYWQ0OS00N2M4LTllMGQtZmM4OGUyMWQwZDAyIiwiZDc5MzcwODctYTRhMS00NTY1LTg3YzctODgwMzAxOTEyNjZmIiwiODcxMzY3Y2ItZTlhNC00MWRlLWJiZmQtZTNmZDE4ZGY0ZWQxIiwiMTc1Yjc5OTUtNDg5NC00NjA1LTk3MGUtOTJkNjEyN2FiNzZkIiwiNTRkMTYxODctMWViMy00ZWI1LWEyODAtYzE0YmJlOWFhZThhIiwiMDM2NDhmYjItMWM3Mi00YzQzLTlhNzYtN2RiYjNhNjY5MjNmIiwiNmQ4MTk2OTYtMjFhNS00N2U3LTg3ZGQtYWYyMmU4YmI3ZGQzIiwiNDc4Y2VmZjAtMzE0My00OGI2LWFkZWYtMDIxNzI3MDM4ZjRlIiwiYTI3NTkxN2YtMDg0Yy00MDZjLWJhYmQtOTFjZmI5NTliZWY5IiwiNDE2YWZkYzctYmZmMy00NjZhLTk2MzktZDIzYjM4YzQ0MTdjIiwiOWIxN2IwNmItNmRhYi00OWJlLTllYWYtMzkyM2JlMmQ2MTAwIiwiZTU5ODY5YzAtNzIyMy00ZmIwLWJiZjMtNjUwZDdjOGZiNjNhIiwiNzM3MmM1NzctODZiMS00ZjUwLTg3NDQtZjA3N2MxNDJiZTQyIiwiN2I0MGRjN2EtMmIxOC00ZjM4LTg1YzctZDViOTNlYzhmODUxIiwiZmNkYWU0ZGYtNmQ2Zi00MzgzLWI1ZDQtMjBlMDVjZmEyOTE2IiwiZmVlMDA4NTctY2YyNC00YzQwLTgwOTItYjBiNGRhNzNmNDYzIiwiNjAwMDM1OTctMTViYS00NGE0LWJlMzctZTlmOWZjMTc5MDBlIiwiMGNjNGNjOTctMzQ4NC00MzJhLTk3N2UtMmU5NGQ2MzdkOTNlIiwiNGQ5MzE2ZTctMWNhZS00NTk1LWIyZGYtYjVjODIzNDczYmZkIiwiZmU5YzdiNDItNjY2MS00OGU2LWEzNjMtOTRmN2I5OWNlZGQ1IiwiM2EzMzEyZDAtZDNkZC00YTU5LWJjZmUtOWU4ZGZiMTM2ZGJlIiwiZDYyMGJhZGUtN2MwOC00YThmLWEzNDEtNzY4OGY5ZDA2NzJlIiwiZDY3MmE0NjUtMGZkMi00NjA1LWJmZTUtYmViNjkzMWE1ZWRmIiwiNjU1NjhkMWEtYzRjYy00NDIyLWIwNGYtMTlmZmNmNjMzZDYzIiwiOGEzYThkMmQtODhjNS00OTEzLTg1YWUtNWY5MTBkNDMzYWJhIiwiNzlkNDQwNzYtNjJjMC00NjgxLTkwYjQtZGU2NDk3YzFmMTlhIiwiZmQxYzNlNTgtMzEwZi00NzAwLTliMzEtZDg3ODFjMTFkODFlIiwiZDAyOTc0YzUtYjVkOC00NGJlLWJhNGYtNzYxZjhkOWViNDY3IiwiNmEwNWE2MDgtOGM2MC00ZjMyLWFjYWItOWVhYzRmYWU2ODM4IiwiZjE0NTMxMjUtMWM3ZS00ODY5LTg5NTEtYWQzMmE5YzVkZWRjIiwiZjU2ZDJkNzgtNzdhNi00MDdhLTk0ZWEtMmEyYjRkMDRhYzNiIiwiZGI4MGM0ZWEtNDZkNi00MDY5LTg3ZmEtN2E1MTc5YWFkZGVjIiwiNzE2ODM3OWEtMWI3OS00NDY4LWJiYjktMjQzMGU2MTc3MzNjIiwiN2Y5ZWM3YjUtMDJhNy00MTgyLWI5NjEtYTI2OThjMTYzMDI0IiwiOWM3NTQ0ZDktMmUwNC00ZDdmLTgxNWEtOTMxNTY1YzdlNGZhIiwiNDEwY2I2NDgtYzkyNS00NzFjLWJkYjgtYWU4M2Q5MDI2MTNkIiwiZmFjYmEzYTItMDE3NS00ODRmLTk0YjItYjVlMTQ0YTk5OTdhIl0sImlwYWRkciI6Ijk0LjYyLjE5OS4wIiwibmFtZSI6IkdvbsOnYWxvIENoYXZlcyIsIm9pZCI6IjYwZjAxYmQ0LTAzNTAtNGYyMC1iNzM5LWRmYWQ1YzI4ZDZkMiIsIm9ucHJlbV9zaWQiOiJTLTEtNS0yMS0yMTQxMjE3OTc4LTE0NjY4NTU5MTctMTc2ODk1MDMwLTEyNzk5MCIsInB1aWQiOiIxMDAzMjAwMEQ0NkJGNDZBIiwicmgiOiIwLkFRd0FlTUc4MzgtOGxVV1Bqam94ZGQtUXQ1VjNzQVRialJwR3UtNEMtZUdfZTBZTUFJZy4iLCJzY3AiOiJ1c2VyX2ltcGVyc29uYXRpb24iLCJzdWIiOiJqM2kxYVluMk5TWUtBZW8yZ01vb05VVm1ic284bGR3Y2NBLURSdUdmYzBNIiwidGlkIjoiZGZiY2MxNzgtYmNjZi00NTk1LThmOGUtM2EzMTc1ZGY5MGI3IiwidW5pcXVlX25hbWUiOiJnb25jYWxvLmNoYXZlc0BoaXNjb3guY29tIiwidXBuIjoiZ29uY2Fsby5jaGF2ZXNAaGlzY294LmNvbSIsInV0aSI6ImVZcDhnYVpyODBlSzhwRW00X19UQUEiLCJ2ZXIiOiIxLjAiLCJ3aWRzIjpbImI3OWZiZjRkLTNlZjktNDY4OS04MTQzLTc2YjE5NGU4NTUwOSJdLCJ4bXNfdGNkdCI6MTM5OTQ1ODE1Mn0.wGbXZBWq-aRKPHpLkrYkoJQ9cdd24L8Jp-S5CGjsK8413ExnXt7FKDFchetTIhIGmiPrzqqQIPOH18N75auE-RThzXhLQG8e753H0X-_p18CLTmb4-mo8R15DDmlVjRdU1rXNXV1aMDbWsoPEF8MAy7Dyts0EeWePN92ke7uTdJ2wRojbZo_ZEjKlqpTStCzA9Skk6YV94gr74zU-ZmiN5H0fGjqw6FR0lO0fP9r1p2cX2OKQ8U1ghk73FXGoObLGpUEqOI2VLeFf2KV3YXF9GhsBg9Z5CicZE9PnRiODwIp_WcNCdEC_TfGCxAALt9Mw8UDaAj0S1pDAhNt01Vc5w",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": \"/subscriptions/4c3b88c7-b886-469d-b9a8-fce396365919/resourceGroups/sbu-nxs-eu-plat-ne/providers/Microsoft.ApiManagement/service/sbu-nxs-eu-plat-apim-ne/subscriptions/dev-eu-validation-location-default\",   \r\n    \"type\": \"Microsoft.ApiManagement/service/subscriptions\",\r\n    \"name\": \"dev-eu-validation-location-default\",\r\n    \"properties\": {\r\n        \"ownerId\": \"/subscriptions/4c3b88c7-b886-469d-b9a8-fce396365919/resourceGroups/sbu-nxs-eu-plat-ne/providers/Microsoft.ApiManagement/service/sbu-nxs-eu-plat-apim-ne/users/1\",\r\n        \"scope\": \"/subscriptions/4c3b88c7-b886-469d-b9a8-fce396365919/resourceGroups/sbu-nxs-eu-plat-ne/providers/Microsoft.ApiManagement/service/sbu-nxs-eu-plat-apim-ne/products/dev-eu-validation-location-default\",\r\n        \"displayName\": \"dev-eu-validation-location-default\",\r\n        \"state\": \"active\",\r\n        \"createdDate\": \"2020-10-30T02:50:00.14Z\",\r\n        \"startDate\": \"2020-10-30T00:00:00Z\",\r\n        \"expirationDate\": null,\r\n        \"endDate\": null,\r\n        \"notificationDate\": null,\r\n        \"primaryKey\": \"ca4e2a4b94fe4fc98dcaaf6373db2fa0\",\r\n        \"secondaryKey\": \"43e6de51235e47d8874e549ca2061c04\",\r\n        \"stateComment\": null,\r\n        \"allowTracing\": true\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://management.azure.com/subscriptions/4c3b88c7-b886-469d-b9a8-fce396365919/resourceGroups/sbu-nxs-eu-plat-ne/providers/Microsoft.ApiManagement/service/sbu-nxs-eu-plat-apim-ne/subscriptions/dev-eu-validation-location-default?api-version=2020-06-01-preview",
+									"protocol": "https",
+									"host": [
+										"management",
+										"azure",
+										"com"
+									],
+									"path": [
+										"subscriptions",
+										"4c3b88c7-b886-469d-b9a8-fce396365919",
+										"resourceGroups",
+										"sbu-nxs-eu-plat-ne",
+										"providers",
+										"Microsoft.ApiManagement",
+										"service",
+										"sbu-nxs-eu-plat-apim-ne",
+										"subscriptions",
+										"dev-eu-validation-location-default"
+									],
+									"query": [
+										{
+											"key": "api-version",
+											"value": "2020-06-01-preview"
+										}
+									]
+								},
+								"description": "https://docs.microsoft.com/en-us/rest/api/apimanagement/2020-06-01-preview/subscription/createorupdate"
+							},
+							"response": []
+						},
+						{
+							"name": "SubcriptionsKey.GetDetail",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6ImtnMkxZczJUMENUaklmajRydDZKSXluZW4zOCIsImtpZCI6ImtnMkxZczJUMENUaklmajRydDZKSXluZW4zOCJ9.eyJhdWQiOiJodHRwczovL21hbmFnZW1lbnQuY29yZS53aW5kb3dzLm5ldC8iLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC9kZmJjYzE3OC1iY2NmLTQ1OTUtOGY4ZS0zYTMxNzVkZjkwYjcvIiwiaWF0IjoxNjA2MzI1OTc3LCJuYmYiOjE2MDYzMjU5NzcsImV4cCI6MTYwNjMyOTg3NywiYWNyIjoiMSIsImFpbyI6IkFTUUEyLzhSQUFBQThJdVRWbERKZ3FpK1QzQy8vcHF5djYxNExrczhydENoWElQczI2TXFMMDQ9IiwiYW1yIjpbInB3ZCJdLCJhcHBpZCI6IjA0YjA3Nzk1LThkZGItNDYxYS1iYmVlLTAyZjllMWJmN2I0NiIsImFwcGlkYWNyIjoiMCIsImRldmljZWlkIjoiZDQ1MDk4MTEtYTY4MC00OTVkLWE0MTYtNmVmMGQxY2FlNDYxIiwiZmFtaWx5X25hbWUiOiJDaGF2ZXMiLCJnaXZlbl9uYW1lIjoiR29uw6dhbG8iLCJncm91cHMiOlsiMzZlZTYyNzUtODhkYS00ZTBiLWI2MWQtYzEyNGExY2I1YTgzIiwiMTBmZjI3OWMtYWM3Zi00ZjQwLTg5Y2QtZTRjYjA5NzAwYjAzIiwiNzBjNjYxMjYtYzgwNi00NGU4LTgzMGYtNmU2YjRlNWMxYjdmIiwiYjBjMjMxNGMtNjgwMi00NzM2LWFlODItZjc2NjAyNTczZjE5IiwiMDk0ZTUwZDYtMzViOS00NjQ5LTgxMmUtYWVkZWQxZWE4ZGE0IiwiODEzMDViZjMtZjMzZi00NGJkLWE4MjctODI5ZDRkMGExMzI4IiwiOTRmZDRjMjQtOTc4Yi00NjczLWE3NmYtYWMwMjdjZTRhMjVmIiwiODMxMDJkY2UtNzgxYy00M2VkLWE4NTAtYjVkMWM2MjcxNWEwIiwiMTI0NGZmMzYtMDA3My00NTVmLWFiYjctZjA0YzA0N2Y5YjYyIiwiZDNjZTJmYWYtZmMzZC00NWViLTllNzQtMmE5MzI3ZTc3YzM0IiwiZGU0MTZlZjYtYjk3ZC00MzllLTg1MjYtMDhjNGFjNTQwMzZmIiwiODFiMWViODYtZTBmOC00ZmMxLWFmNDUtMmJiMGZlNjM3MzdlIiwiNDkwMGY4ZTgtYjM4Ni00NmFiLTk3ZjMtNmE4NWU3NmVlMDc4IiwiYTM3MWZlYjktNTgzMS00NjI3LTlhOTgtOTI1ZGEwOTQxMTM0IiwiYWUzNDdmMmUtNWRlYS00YzRkLTg0ZTctYmQyMzFhMmU4MzA2IiwiM2NiNzc1MjQtZTkzMi00MjA0LWIyMzMtZDllMzRmMWU2OGFlIiwiOTY1MmIwNjMtNjcyMS00MGQyLWI3N2UtMDZhNmRhMmM5YzRlIiwiZDMzZDUyNGMtMTA1Ni00MGQyLTgxZmYtYzM3ZjU4MzdlMDAwIiwiNDI0ZDhkYjYtMzk0Yy00ZjYzLWE1MWYtODAwZTE4MDg1NTc1IiwiNDc2Y2UwZTItNjFlNC00YWQ4LTg4NzUtNGEyOGJjOTcxNzBhIiwiOWE0MmQyNjQtM2E2Mi00YTk0LTgxMDctMjIyMzE5OWZiMjI5IiwiYjY4NjIwMmItMjZmOC00NTQzLWFmN2YtYjcyNDgxYTdlNTk4IiwiMWZlMTJlM2EtMmZlZC00YzQ3LTg2M2UtOTJkZmNjNjQ0MmIwIiwiYmFmNTJiMDAtYjE0Yi00MTA4LTllMTgtODdhMjZlMDI1MGViIiwiMmFiMWM2ZGItYzI4Zi00NmIyLTllN2QtNjIxYzczYjE2ODQ5IiwiNWZiOTg3NzEtZDJhOS00Y2ZlLTlmYTEtZTVmYzA0NzBhYjY2IiwiNmNmNmZlNzUtYTM4MS00MjhmLWE2OWQtN2U1NWYyY2ZmYTQ5IiwiYzgzNDlhZjQtODgwMC00MDA0LTk0ZTktNjRmNGJhNjdiYWI4IiwiNzdiNzk3MDItOTgzOS00OTM1LWI0ZTEtMzIwNzAyMjYxMzY5IiwiZGQ3NzE2YTMtMWMwZC00MmE0LWIxODYtMTQ0ZmM4YmY5OTUyIiwiNWQ4YzFkMWUtYjVjYy00MzVjLWFjNDQtYTNhYTMxZjMxNjk2IiwiMGZmMTQxOWItYmYxYy00NWExLWIzM2ItZGE4NDU2ODdhYjAxIiwiZjVhNzAwYWYtZDU0MC00Y2I5LTlhYTUtNmI3ZGE2YTM2YzJjIiwiZDJiNGVlZmMtNDM3MC00Njg3LWJlNjUtZmE1NGIzY2U2M2ZiIiwiNjI4OGRhOGYtYzM1Yy00NWYwLTk2NjUtYzZhNzQxZmM4ODc4IiwiMTdlNTNjYTUtNWY5ZS00ZjMzLWI5YzktNGIxYWM0MzA2N2E2IiwiMzJjOGFlNDgtNDY2Yy00ZjUyLTk0OTctN2VlYzUyN2M2NTgzIiwiZDMzNmE0ZjktNTkxYS00MzdiLWI4NjItMGIxNjIyNTdjMTJlIiwiZjk5N2Q0ZjMtMDQ1Ni00YTdmLWE2N2MtMTJlNjNiNzZjM2QyIiwiNTM3MWIzMGYtMzY0MS00YTUwLTkwYzAtZmZiOTEwNmQ4ZTFhIiwiNTNhZGU4NDYtMTM2ZS00OGQ2LWJiYzItNWU0MDBiNDliNWZmIiwiMDFhZjI0ZDItYWM0My00NjhjLWFlMDAtYzQzMGNiYjNlNDY5IiwiOWU3Mjg3NGMtYzY4Yy00NzZjLTgzOTktNGE5ZWM3ZTFjN2RjIiwiMzRiYWRkMzItYzE1OS00YjFiLTlhNzgtMjEyYmFlYThjNGE1IiwiNTE1YmIzNzEtMjY4ZC00NjE2LTkwYjktZjQwNTQwNTNlN2Q0IiwiNjdhYzE1ZTQtNzVjMy00NjEwLWE1NjEtMzcwZjZiOTMyODE1IiwiMjMxYjdhNTYtZmRiNi00M2QyLTk5NDctOGFjN2IwN2JkYmI5IiwiOTc1YjJlNzEtYWQ0OS00N2M4LTllMGQtZmM4OGUyMWQwZDAyIiwiZDc5MzcwODctYTRhMS00NTY1LTg3YzctODgwMzAxOTEyNjZmIiwiODcxMzY3Y2ItZTlhNC00MWRlLWJiZmQtZTNmZDE4ZGY0ZWQxIiwiMTc1Yjc5OTUtNDg5NC00NjA1LTk3MGUtOTJkNjEyN2FiNzZkIiwiNTRkMTYxODctMWViMy00ZWI1LWEyODAtYzE0YmJlOWFhZThhIiwiMDM2NDhmYjItMWM3Mi00YzQzLTlhNzYtN2RiYjNhNjY5MjNmIiwiNmQ4MTk2OTYtMjFhNS00N2U3LTg3ZGQtYWYyMmU4YmI3ZGQzIiwiNDc4Y2VmZjAtMzE0My00OGI2LWFkZWYtMDIxNzI3MDM4ZjRlIiwiYTI3NTkxN2YtMDg0Yy00MDZjLWJhYmQtOTFjZmI5NTliZWY5IiwiNDE2YWZkYzctYmZmMy00NjZhLTk2MzktZDIzYjM4YzQ0MTdjIiwiOWIxN2IwNmItNmRhYi00OWJlLTllYWYtMzkyM2JlMmQ2MTAwIiwiZTU5ODY5YzAtNzIyMy00ZmIwLWJiZjMtNjUwZDdjOGZiNjNhIiwiNzM3MmM1NzctODZiMS00ZjUwLTg3NDQtZjA3N2MxNDJiZTQyIiwiN2I0MGRjN2EtMmIxOC00ZjM4LTg1YzctZDViOTNlYzhmODUxIiwiZmNkYWU0ZGYtNmQ2Zi00MzgzLWI1ZDQtMjBlMDVjZmEyOTE2IiwiZmVlMDA4NTctY2YyNC00YzQwLTgwOTItYjBiNGRhNzNmNDYzIiwiNjAwMDM1OTctMTViYS00NGE0LWJlMzctZTlmOWZjMTc5MDBlIiwiMGNjNGNjOTctMzQ4NC00MzJhLTk3N2UtMmU5NGQ2MzdkOTNlIiwiNGQ5MzE2ZTctMWNhZS00NTk1LWIyZGYtYjVjODIzNDczYmZkIiwiZmU5YzdiNDItNjY2MS00OGU2LWEzNjMtOTRmN2I5OWNlZGQ1IiwiM2EzMzEyZDAtZDNkZC00YTU5LWJjZmUtOWU4ZGZiMTM2ZGJlIiwiZDYyMGJhZGUtN2MwOC00YThmLWEzNDEtNzY4OGY5ZDA2NzJlIiwiZDY3MmE0NjUtMGZkMi00NjA1LWJmZTUtYmViNjkzMWE1ZWRmIiwiNjU1NjhkMWEtYzRjYy00NDIyLWIwNGYtMTlmZmNmNjMzZDYzIiwiOGEzYThkMmQtODhjNS00OTEzLTg1YWUtNWY5MTBkNDMzYWJhIiwiNzlkNDQwNzYtNjJjMC00NjgxLTkwYjQtZGU2NDk3YzFmMTlhIiwiZmQxYzNlNTgtMzEwZi00NzAwLTliMzEtZDg3ODFjMTFkODFlIiwiZDAyOTc0YzUtYjVkOC00NGJlLWJhNGYtNzYxZjhkOWViNDY3IiwiNmEwNWE2MDgtOGM2MC00ZjMyLWFjYWItOWVhYzRmYWU2ODM4IiwiZjE0NTMxMjUtMWM3ZS00ODY5LTg5NTEtYWQzMmE5YzVkZWRjIiwiZjU2ZDJkNzgtNzdhNi00MDdhLTk0ZWEtMmEyYjRkMDRhYzNiIiwiZGI4MGM0ZWEtNDZkNi00MDY5LTg3ZmEtN2E1MTc5YWFkZGVjIiwiNzE2ODM3OWEtMWI3OS00NDY4LWJiYjktMjQzMGU2MTc3MzNjIiwiN2Y5ZWM3YjUtMDJhNy00MTgyLWI5NjEtYTI2OThjMTYzMDI0IiwiOWM3NTQ0ZDktMmUwNC00ZDdmLTgxNWEtOTMxNTY1YzdlNGZhIiwiNDEwY2I2NDgtYzkyNS00NzFjLWJkYjgtYWU4M2Q5MDI2MTNkIiwiZmFjYmEzYTItMDE3NS00ODRmLTk0YjItYjVlMTQ0YTk5OTdhIl0sImlwYWRkciI6Ijk0LjYyLjE5OS4wIiwibmFtZSI6IkdvbsOnYWxvIENoYXZlcyIsIm9pZCI6IjYwZjAxYmQ0LTAzNTAtNGYyMC1iNzM5LWRmYWQ1YzI4ZDZkMiIsIm9ucHJlbV9zaWQiOiJTLTEtNS0yMS0yMTQxMjE3OTc4LTE0NjY4NTU5MTctMTc2ODk1MDMwLTEyNzk5MCIsInB1aWQiOiIxMDAzMjAwMEQ0NkJGNDZBIiwicmgiOiIwLkFRd0FlTUc4MzgtOGxVV1Bqam94ZGQtUXQ1VjNzQVRialJwR3UtNEMtZUdfZTBZTUFJZy4iLCJzY3AiOiJ1c2VyX2ltcGVyc29uYXRpb24iLCJzdWIiOiJqM2kxYVluMk5TWUtBZW8yZ01vb05VVm1ic284bGR3Y2NBLURSdUdmYzBNIiwidGlkIjoiZGZiY2MxNzgtYmNjZi00NTk1LThmOGUtM2EzMTc1ZGY5MGI3IiwidW5pcXVlX25hbWUiOiJnb25jYWxvLmNoYXZlc0BoaXNjb3guY29tIiwidXBuIjoiZ29uY2Fsby5jaGF2ZXNAaGlzY294LmNvbSIsInV0aSI6ImVZcDhnYVpyODBlSzhwRW00X19UQUEiLCJ2ZXIiOiIxLjAiLCJ3aWRzIjpbImI3OWZiZjRkLTNlZjktNDY4OS04MTQzLTc2YjE5NGU4NTUwOSJdLCJ4bXNfdGNkdCI6MTM5OTQ1ODE1Mn0.wGbXZBWq-aRKPHpLkrYkoJQ9cdd24L8Jp-S5CGjsK8413ExnXt7FKDFchetTIhIGmiPrzqqQIPOH18N75auE-RThzXhLQG8e753H0X-_p18CLTmb4-mo8R15DDmlVjRdU1rXNXV1aMDbWsoPEF8MAy7Dyts0EeWePN92ke7uTdJ2wRojbZo_ZEjKlqpTStCzA9Skk6YV94gr74zU-ZmiN5H0fGjqw6FR0lO0fP9r1p2cX2OKQ8U1ghk73FXGoObLGpUEqOI2VLeFf2KV3YXF9GhsBg9Z5CicZE9PnRiODwIp_WcNCdEC_TfGCxAALt9Mw8UDaAj0S1pDAhNt01Vc5w",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://management.azure.com/subscriptions/4c3b88c7-b886-469d-b9a8-fce396365919/resourceGroups/sbu-nxs-eu-plat-ne/providers/Microsoft.ApiManagement/service/sbu-nxs-eu-plat-apim-ne/subscriptions/5f9b7f5870d1cc13bcc3f184?api-version=2020-06-01-preview",
+									"protocol": "https",
+									"host": [
+										"management",
+										"azure",
+										"com"
+									],
+									"path": [
+										"subscriptions",
+										"4c3b88c7-b886-469d-b9a8-fce396365919",
+										"resourceGroups",
+										"sbu-nxs-eu-plat-ne",
+										"providers",
+										"Microsoft.ApiManagement",
+										"service",
+										"sbu-nxs-eu-plat-apim-ne",
+										"subscriptions",
+										"5f9b7f5870d1cc13bcc3f184"
+									],
+									"query": [
+										{
+											"key": "api-version",
+											"value": "2020-06-01-preview"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Products",
+					"item": [
+						{
+							"name": "Get APIM Products",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{az.bearerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://management.azure.com/subscriptions/{{az.subscriptionId}}/resourceGroups/{{az.resourceGroup.Name}}/providers/Microsoft.ApiManagement/service/{{az.apim.serviceName}}/products/?api-version=2020-06-01-preview",
+									"protocol": "https",
+									"host": [
+										"management",
+										"azure",
+										"com"
+									],
+									"path": [
+										"subscriptions",
+										"{{az.subscriptionId}}",
+										"resourceGroups",
+										"{{az.resourceGroup.Name}}",
+										"providers",
+										"Microsoft.ApiManagement",
+										"service",
+										"{{az.apim.serviceName}}",
+										"products",
+										""
+									],
+									"query": [
+										{
+											"key": "api-version",
+											"value": "2020-06-01-preview"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create/Update APIM Product",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{az.bearerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"properties\": {\r\n    \"displayName\": \"Test Template Chaves\"\r\n  }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://management.azure.com/subscriptions/{{az.subscriptionId}}/resourceGroups/{{az.resourceGroup.Name}}/providers/Microsoft.ApiManagement/service/{{az.apim.serviceName}}/products/test-product?api-version=2020-06-01-preview",
+									"protocol": "https",
+									"host": [
+										"management",
+										"azure",
+										"com"
+									],
+									"path": [
+										"subscriptions",
+										"{{az.subscriptionId}}",
+										"resourceGroups",
+										"{{az.resourceGroup.Name}}",
+										"providers",
+										"Microsoft.ApiManagement",
+										"service",
+										"{{az.apim.serviceName}}",
+										"products",
+										"test-product"
+									],
+									"query": [
+										{
+											"key": "api-version",
+											"value": "2020-06-01-preview"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "DataFactory",
+			"item": [
+				{
+					"name": "Pipelines",
+					"item": [
+						{
+							"name": "Az-DataFactory-CreatePipRun",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Imh1Tjk1SXZQZmVocTM0R3pCRFoxR1hHaXJuTSIsImtpZCI6Imh1Tjk1SXZQZmVocTM0R3pCRFoxR1hHaXJuTSJ9.eyJhdWQiOiJjZjBkY2FkZS05YzRhLTRiNmYtODM1Zi1kNTIwMGY3Y2RiNGQiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC83NTE3YmM0Mi1iY2Y4LTQ5MTYtYTY3Ny1iNTc1MzA1MWY4NDYvIiwiaWF0IjoxNTk0NzM4NzYxLCJuYmYiOjE1OTQ3Mzg3NjEsImV4cCI6MTU5NDgyNTQ2MSwiYWlvIjoiRTJCZ1lIQzBOTHgyMVVlNWJCYTd6TTBOeGtFeEFBPT0iLCJhcHBpZCI6ImE0ZWY3YWY4LWVkZDUtNDI1OS1hMjQ2LTEyNTE3NzVjYjQyYiIsImFwcGlkYWNyIjoiMiIsImlkcCI6Imh0dHBzOi8vc3RzLndpbmRvd3MubmV0Lzc1MTdiYzQyLWJjZjgtNDkxNi1hNjc3LWI1NzUzMDUxZjg0Ni8iLCJvaWQiOiI1MmI3YjkyNC02MjJjLTQ1MGMtODkyZC01NWYzZjg4NmIxMzMiLCJzdWIiOiI1MmI3YjkyNC02MjJjLTQ1MGMtODkyZC01NWYzZjg4NmIxMzMiLCJ0aWQiOiI3NTE3YmM0Mi1iY2Y4LTQ5MTYtYTY3Ny1iNTc1MzA1MWY4NDYiLCJ1dGkiOiJyOHFZNkUta1UwcVE5cTdMWkdZckFRIiwidmVyIjoiMS4wIn0.VTUDOnLuk5Jyrw0q_VpmPsXt0LrnUZnGm6ncBygiOpRyCWsmfF7RcF3lKD0yCMcceN4GSGdoEO-yI4-__HUfGjeFN_IDAfRdoUAZIBGxqhqf1qGMaFdvh5gpq9N3B2T5HFvVB85sKb_ojhC9seEydSwCcfFssRgaMQahVjx4TG_sFWGDGsDy4bCGUyUKTvJjVUz77Zf2wMZ3r07VNCimMk7PFBSZv8eGyXx18aUn0XJCxlR7aH1JVVvmkkRzaEHukbDs2PwIuIsTWS6tipEfdc8RqKlQ9kQu3U9VcR2CConjljlLQL5SM5iOQStLJUvVvNGTjA-6lZuN5FOh1PYt3w || FunctionToken: eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Imh1Tjk1SXZQZmVocTM0R3pCRFoxR1hHaXJuTSIsImtpZCI6Imh1Tjk1SXZQZmVocTM0R3pCRFoxR1hHaXJuTSJ9.eyJhdWQiOiJodHRwczovL21hbmFnZW1lbnQuYXp1cmUuY29tLyIsImlzcyI6Imh0dHBzOi8vc3RzLndpbmRvd3MubmV0Lzc1MTdiYzQyLWJjZjgtNDkxNi1hNjc3LWI1NzUzMDUxZjg0Ni8iLCJpYXQiOjE1OTQ3NDUyODYsIm5iZiI6MTU5NDc0NTI4NiwiZXhwIjoxNTk0ODMxOTg2LCJhaW8iOiJFMkJnWUlqNVpDMjFzVllzeDAvWlhrM1NZTXRXQUE9PSIsImFwcGlkIjoiNTA2NGM3NDctMGE1Yi00ZjE0LTk3NzktN2YzYjc0OGFiOTVjIiwiYXBwaWRhY3IiOiIyIiwiaWRwIjoiaHR0cHM6Ly9zdHMud2luZG93cy5uZXQvNzUxN2JjNDItYmNmOC00OTE2LWE2NzctYjU3NTMwNTFmODQ2LyIsIm9pZCI6IjA2NjE5ZmMzLTc1OTQtNDkxZC05Y2E4LTlkODMyOGM3ZjM4NCIsInN1YiI6IjA2NjE5ZmMzLTc1OTQtNDkxZC05Y2E4LTlkODMyOGM3ZjM4NCIsInRpZCI6Ijc1MTdiYzQyLWJjZjgtNDkxNi1hNjc3LWI1NzUzMDUxZjg0NiIsInV0aSI6IkJ2WmI2czR2WVVXNFhRR05LcW1rQUEiLCJ2ZXIiOiIxLjAiLCJ4bXNfbWlyaWQiOiIvc3Vic2NyaXB0aW9ucy8zNjQxMjI4YS0xNjcyLTQ5NzYtYmM5My04MTg4YWFiMGJlOTIvcmVzb3VyY2Vncm91cHMvcmdfYXBpbV90ZXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuV2ViL3NpdGVzL2ZuYy1hcHAtcmV0dXJuLWdtdCJ9.BOsRkuY4rqyt4UjpZpZ21zD0r247FgEYLi0C8OwPpV_Eak8-nu7VkK2FjU9Jl6fQOJtUFzjxQ4lfi8anx-azcXPodRs5EqyH-jcUE82u-etZTLuoTtUFTaILnno1yyVatCZTPO2RWavRzgLDrOc9KXUkkminqepk3SfOpj9QcQXWCdENhZFyeQ7B2AyKppDDV720paJZ5T5XsCED6qVIr9LZ5NGM-vC_x8yKmDqKQ7DjJ_F9LfJEJUFu5RKpZViSGpyHRVFUWYykKtSiKMdNTw76V0FkLi8FGWM2ovhlVhKBitT5tPIx53Tm-PRPOcSqnrEkl8wza7yyeuwadvblJg",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "https://management.azure.com/subscriptions/3641228a-1672-4976-bc93-8188aab0be92/resourceGroups/rg_apim_test/providers/Microsoft.DataFactory/factories/datafactory-codit-poc/pipelines/pip-csv-to-bd/createRun?api-version=2018-06-01",
+									"protocol": "https",
+									"host": [
+										"management",
+										"azure",
+										"com"
+									],
+									"path": [
+										"subscriptions",
+										"3641228a-1672-4976-bc93-8188aab0be92",
+										"resourceGroups",
+										"rg_apim_test",
+										"providers",
+										"Microsoft.DataFactory",
+										"factories",
+										"datafactory-codit-poc",
+										"pipelines",
+										"pip-csv-to-bd",
+										"createRun"
+									],
+									"query": [
+										{
+											"key": "api-version",
+											"value": "2018-06-01"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "call datafactory trigger",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Ocp-Apim-Subscription-Key",
+										"value": "fae1e139699a4fd89dba7e5e5699ba5f",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "https://apim-codit-nexus.azure-api.net/fnc-data-import/data_import",
+									"protocol": "https",
+									"host": [
+										"apim-codit-nexus",
+										"azure-api",
+										"net"
+									],
+									"path": [
+										"fnc-data-import",
+										"data_import"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "List.DataFactories",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{az.bearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://management.azure.com/subscriptions/{{az.subscriptionId}}/resourceGroups/{{az.resourceGroup.Name}}/providers/Microsoft.DataFactory/factories/?api-version=2018-06-01",
+							"protocol": "https",
+							"host": [
+								"management",
+								"azure",
+								"com"
+							],
+							"path": [
+								"subscriptions",
+								"{{az.subscriptionId}}",
+								"resourceGroups",
+								"{{az.resourceGroup.Name}}",
+								"providers",
+								"Microsoft.DataFactory",
+								"factories",
+								""
+							],
+							"query": [
+								{
+									"key": "api-version",
+									"value": "2018-06-01"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "BlobStorage",
+			"item": [
+				{
+					"name": "Sample PUT with tags",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-ms-tags",
+								"value": "mytag=teste2&mysecondtag=teste4",
+								"type": "text"
+							},
+							{
+								"key": "x-ms-blob-type",
+								"value": "BlockBlob",
+								"type": "text"
+							},
+							{
+								"key": "x-ms-meta-meta1",
+								"value": "teste2222",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "tasd adasdas das"
+						},
+						"url": {
+							"raw": "https://testeblobfrance.blob.core.windows.net/cont1/samplet.txt?sv=2019-10-10&ss=bfqt&srt=sco&sp=rwdlacuptfx&se=2020-11-17T23:42:01Z&st=2020-11-17T15:42:01Z&spr=https&sig=WK9XwpN4wcJ7Ruxcn8uTAjFVwnJ%2FQulBgEfk1ppRnNI%3D&comp=tags",
+							"protocol": "https",
+							"host": [
+								"testeblobfrance",
+								"blob",
+								"core",
+								"windows",
+								"net"
+							],
+							"path": [
+								"cont1",
+								"samplet.txt"
+							],
+							"query": [
+								{
+									"key": "sv",
+									"value": "2019-10-10"
+								},
+								{
+									"key": "ss",
+									"value": "bfqt"
+								},
+								{
+									"key": "srt",
+									"value": "sco"
+								},
+								{
+									"key": "sp",
+									"value": "rwdlacuptfx"
+								},
+								{
+									"key": "se",
+									"value": "2020-11-17T23:42:01Z"
+								},
+								{
+									"key": "st",
+									"value": "2020-11-17T15:42:01Z"
+								},
+								{
+									"key": "spr",
+									"value": "https"
+								},
+								{
+									"key": "sig",
+									"value": "WK9XwpN4wcJ7Ruxcn8uTAjFVwnJ%2FQulBgEfk1ppRnNI%3D"
+								},
+								{
+									"key": "comp",
+									"value": "tags"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "ResourceGroups",
+			"item": [
+				{
+					"name": "List.ResourceGroups",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer  eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6ImtnMkxZczJUMENUaklmajRydDZKSXluZW4zOCIsImtpZCI6ImtnMkxZczJUMENUaklmajRydDZKSXluZW4zOCJ9.eyJhdWQiOiJodHRwczovL21hbmFnZW1lbnQuY29yZS53aW5kb3dzLm5ldC8iLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC9kZmJjYzE3OC1iY2NmLTQ1OTUtOGY4ZS0zYTMxNzVkZjkwYjcvIiwiaWF0IjoxNjA2MzM2NzExLCJuYmYiOjE2MDYzMzY3MTEsImV4cCI6MTYwNjM0MDYxMSwiYWNyIjoiMSIsImFpbyI6IkFTUUEyLzhSQUFBQWFaeUJ4Um1wS1hoL1MvblNOdjEzNHJGQVlKenNac01ldkVEMit2VW5MNVE9IiwiYW1yIjpbInB3ZCJdLCJhcHBpZCI6IjA0YjA3Nzk1LThkZGItNDYxYS1iYmVlLTAyZjllMWJmN2I0NiIsImFwcGlkYWNyIjoiMCIsImRldmljZWlkIjoiZDQ1MDk4MTEtYTY4MC00OTVkLWE0MTYtNmVmMGQxY2FlNDYxIiwiZmFtaWx5X25hbWUiOiJDaGF2ZXMiLCJnaXZlbl9uYW1lIjoiR29uw6dhbG8iLCJncm91cHMiOlsiMzZlZTYyNzUtODhkYS00ZTBiLWI2MWQtYzEyNGExY2I1YTgzIiwiMTBmZjI3OWMtYWM3Zi00ZjQwLTg5Y2QtZTRjYjA5NzAwYjAzIiwiNzBjNjYxMjYtYzgwNi00NGU4LTgzMGYtNmU2YjRlNWMxYjdmIiwiYjBjMjMxNGMtNjgwMi00NzM2LWFlODItZjc2NjAyNTczZjE5IiwiMDk0ZTUwZDYtMzViOS00NjQ5LTgxMmUtYWVkZWQxZWE4ZGE0IiwiODEzMDViZjMtZjMzZi00NGJkLWE4MjctODI5ZDRkMGExMzI4IiwiOTRmZDRjMjQtOTc4Yi00NjczLWE3NmYtYWMwMjdjZTRhMjVmIiwiODMxMDJkY2UtNzgxYy00M2VkLWE4NTAtYjVkMWM2MjcxNWEwIiwiMTI0NGZmMzYtMDA3My00NTVmLWFiYjctZjA0YzA0N2Y5YjYyIiwiZDNjZTJmYWYtZmMzZC00NWViLTllNzQtMmE5MzI3ZTc3YzM0IiwiZGU0MTZlZjYtYjk3ZC00MzllLTg1MjYtMDhjNGFjNTQwMzZmIiwiODFiMWViODYtZTBmOC00ZmMxLWFmNDUtMmJiMGZlNjM3MzdlIiwiNDkwMGY4ZTgtYjM4Ni00NmFiLTk3ZjMtNmE4NWU3NmVlMDc4IiwiYTM3MWZlYjktNTgzMS00NjI3LTlhOTgtOTI1ZGEwOTQxMTM0IiwiYWUzNDdmMmUtNWRlYS00YzRkLTg0ZTctYmQyMzFhMmU4MzA2IiwiM2NiNzc1MjQtZTkzMi00MjA0LWIyMzMtZDllMzRmMWU2OGFlIiwiOTY1MmIwNjMtNjcyMS00MGQyLWI3N2UtMDZhNmRhMmM5YzRlIiwiZDMzZDUyNGMtMTA1Ni00MGQyLTgxZmYtYzM3ZjU4MzdlMDAwIiwiNDI0ZDhkYjYtMzk0Yy00ZjYzLWE1MWYtODAwZTE4MDg1NTc1IiwiNDc2Y2UwZTItNjFlNC00YWQ4LTg4NzUtNGEyOGJjOTcxNzBhIiwiOWE0MmQyNjQtM2E2Mi00YTk0LTgxMDctMjIyMzE5OWZiMjI5IiwiYjY4NjIwMmItMjZmOC00NTQzLWFmN2YtYjcyNDgxYTdlNTk4IiwiMWZlMTJlM2EtMmZlZC00YzQ3LTg2M2UtOTJkZmNjNjQ0MmIwIiwiYmFmNTJiMDAtYjE0Yi00MTA4LTllMTgtODdhMjZlMDI1MGViIiwiMmFiMWM2ZGItYzI4Zi00NmIyLTllN2QtNjIxYzczYjE2ODQ5IiwiNWZiOTg3NzEtZDJhOS00Y2ZlLTlmYTEtZTVmYzA0NzBhYjY2IiwiNmNmNmZlNzUtYTM4MS00MjhmLWE2OWQtN2U1NWYyY2ZmYTQ5IiwiYzgzNDlhZjQtODgwMC00MDA0LTk0ZTktNjRmNGJhNjdiYWI4IiwiNzdiNzk3MDItOTgzOS00OTM1LWI0ZTEtMzIwNzAyMjYxMzY5IiwiZGQ3NzE2YTMtMWMwZC00MmE0LWIxODYtMTQ0ZmM4YmY5OTUyIiwiNWQ4YzFkMWUtYjVjYy00MzVjLWFjNDQtYTNhYTMxZjMxNjk2IiwiMGZmMTQxOWItYmYxYy00NWExLWIzM2ItZGE4NDU2ODdhYjAxIiwiZjVhNzAwYWYtZDU0MC00Y2I5LTlhYTUtNmI3ZGE2YTM2YzJjIiwiZDJiNGVlZmMtNDM3MC00Njg3LWJlNjUtZmE1NGIzY2U2M2ZiIiwiNjI4OGRhOGYtYzM1Yy00NWYwLTk2NjUtYzZhNzQxZmM4ODc4IiwiMTdlNTNjYTUtNWY5ZS00ZjMzLWI5YzktNGIxYWM0MzA2N2E2IiwiMzJjOGFlNDgtNDY2Yy00ZjUyLTk0OTctN2VlYzUyN2M2NTgzIiwiZDMzNmE0ZjktNTkxYS00MzdiLWI4NjItMGIxNjIyNTdjMTJlIiwiZjk5N2Q0ZjMtMDQ1Ni00YTdmLWE2N2MtMTJlNjNiNzZjM2QyIiwiNTM3MWIzMGYtMzY0MS00YTUwLTkwYzAtZmZiOTEwNmQ4ZTFhIiwiNTNhZGU4NDYtMTM2ZS00OGQ2LWJiYzItNWU0MDBiNDliNWZmIiwiMDFhZjI0ZDItYWM0My00NjhjLWFlMDAtYzQzMGNiYjNlNDY5IiwiOWU3Mjg3NGMtYzY4Yy00NzZjLTgzOTktNGE5ZWM3ZTFjN2RjIiwiMzRiYWRkMzItYzE1OS00YjFiLTlhNzgtMjEyYmFlYThjNGE1IiwiNTE1YmIzNzEtMjY4ZC00NjE2LTkwYjktZjQwNTQwNTNlN2Q0IiwiNjdhYzE1ZTQtNzVjMy00NjEwLWE1NjEtMzcwZjZiOTMyODE1IiwiMjMxYjdhNTYtZmRiNi00M2QyLTk5NDctOGFjN2IwN2JkYmI5IiwiOTc1YjJlNzEtYWQ0OS00N2M4LTllMGQtZmM4OGUyMWQwZDAyIiwiZDc5MzcwODctYTRhMS00NTY1LTg3YzctODgwMzAxOTEyNjZmIiwiODcxMzY3Y2ItZTlhNC00MWRlLWJiZmQtZTNmZDE4ZGY0ZWQxIiwiMTc1Yjc5OTUtNDg5NC00NjA1LTk3MGUtOTJkNjEyN2FiNzZkIiwiNTRkMTYxODctMWViMy00ZWI1LWEyODAtYzE0YmJlOWFhZThhIiwiMDM2NDhmYjItMWM3Mi00YzQzLTlhNzYtN2RiYjNhNjY5MjNmIiwiNmQ4MTk2OTYtMjFhNS00N2U3LTg3ZGQtYWYyMmU4YmI3ZGQzIiwiNDc4Y2VmZjAtMzE0My00OGI2LWFkZWYtMDIxNzI3MDM4ZjRlIiwiYTI3NTkxN2YtMDg0Yy00MDZjLWJhYmQtOTFjZmI5NTliZWY5IiwiNDE2YWZkYzctYmZmMy00NjZhLTk2MzktZDIzYjM4YzQ0MTdjIiwiOWIxN2IwNmItNmRhYi00OWJlLTllYWYtMzkyM2JlMmQ2MTAwIiwiZTU5ODY5YzAtNzIyMy00ZmIwLWJiZjMtNjUwZDdjOGZiNjNhIiwiNzM3MmM1NzctODZiMS00ZjUwLTg3NDQtZjA3N2MxNDJiZTQyIiwiN2I0MGRjN2EtMmIxOC00ZjM4LTg1YzctZDViOTNlYzhmODUxIiwiZmNkYWU0ZGYtNmQ2Zi00MzgzLWI1ZDQtMjBlMDVjZmEyOTE2IiwiZmVlMDA4NTctY2YyNC00YzQwLTgwOTItYjBiNGRhNzNmNDYzIiwiNjAwMDM1OTctMTViYS00NGE0LWJlMzctZTlmOWZjMTc5MDBlIiwiMGNjNGNjOTctMzQ4NC00MzJhLTk3N2UtMmU5NGQ2MzdkOTNlIiwiNGQ5MzE2ZTctMWNhZS00NTk1LWIyZGYtYjVjODIzNDczYmZkIiwiZmU5YzdiNDItNjY2MS00OGU2LWEzNjMtOTRmN2I5OWNlZGQ1IiwiM2EzMzEyZDAtZDNkZC00YTU5LWJjZmUtOWU4ZGZiMTM2ZGJlIiwiZDYyMGJhZGUtN2MwOC00YThmLWEzNDEtNzY4OGY5ZDA2NzJlIiwiZDY3MmE0NjUtMGZkMi00NjA1LWJmZTUtYmViNjkzMWE1ZWRmIiwiNjU1NjhkMWEtYzRjYy00NDIyLWIwNGYtMTlmZmNmNjMzZDYzIiwiOGEzYThkMmQtODhjNS00OTEzLTg1YWUtNWY5MTBkNDMzYWJhIiwiNzlkNDQwNzYtNjJjMC00NjgxLTkwYjQtZGU2NDk3YzFmMTlhIiwiZmQxYzNlNTgtMzEwZi00NzAwLTliMzEtZDg3ODFjMTFkODFlIiwiZDAyOTc0YzUtYjVkOC00NGJlLWJhNGYtNzYxZjhkOWViNDY3IiwiNmEwNWE2MDgtOGM2MC00ZjMyLWFjYWItOWVhYzRmYWU2ODM4IiwiZjE0NTMxMjUtMWM3ZS00ODY5LTg5NTEtYWQzMmE5YzVkZWRjIiwiZjU2ZDJkNzgtNzdhNi00MDdhLTk0ZWEtMmEyYjRkMDRhYzNiIiwiZGI4MGM0ZWEtNDZkNi00MDY5LTg3ZmEtN2E1MTc5YWFkZGVjIiwiNzE2ODM3OWEtMWI3OS00NDY4LWJiYjktMjQzMGU2MTc3MzNjIiwiN2Y5ZWM3YjUtMDJhNy00MTgyLWI5NjEtYTI2OThjMTYzMDI0IiwiOWM3NTQ0ZDktMmUwNC00ZDdmLTgxNWEtOTMxNTY1YzdlNGZhIiwiNDEwY2I2NDgtYzkyNS00NzFjLWJkYjgtYWU4M2Q5MDI2MTNkIiwiZmFjYmEzYTItMDE3NS00ODRmLTk0YjItYjVlMTQ0YTk5OTdhIl0sImlwYWRkciI6Ijk0LjYyLjE5OS4wIiwibmFtZSI6IkdvbsOnYWxvIENoYXZlcyIsIm9pZCI6IjYwZjAxYmQ0LTAzNTAtNGYyMC1iNzM5LWRmYWQ1YzI4ZDZkMiIsIm9ucHJlbV9zaWQiOiJTLTEtNS0yMS0yMTQxMjE3OTc4LTE0NjY4NTU5MTctMTc2ODk1MDMwLTEyNzk5MCIsInB1aWQiOiIxMDAzMjAwMEQ0NkJGNDZBIiwicmgiOiIwLkFRd0FlTUc4MzgtOGxVV1Bqam94ZGQtUXQ1VjNzQVRialJwR3UtNEMtZUdfZTBZTUFJZy4iLCJzY3AiOiJ1c2VyX2ltcGVyc29uYXRpb24iLCJzdWIiOiJqM2kxYVluMk5TWUtBZW8yZ01vb05VVm1ic284bGR3Y2NBLURSdUdmYzBNIiwidGlkIjoiZGZiY2MxNzgtYmNjZi00NTk1LThmOGUtM2EzMTc1ZGY5MGI3IiwidW5pcXVlX25hbWUiOiJnb25jYWxvLmNoYXZlc0BoaXNjb3guY29tIiwidXBuIjoiZ29uY2Fsby5jaGF2ZXNAaGlzY294LmNvbSIsInV0aSI6ImNpeFNsMUNRLWs2UmNhOTl1ejNpQUEiLCJ2ZXIiOiIxLjAiLCJ3aWRzIjpbImI3OWZiZjRkLTNlZjktNDY4OS04MTQzLTc2YjE5NGU4NTUwOSJdLCJ4bXNfdGNkdCI6MTM5OTQ1ODE1Mn0.LKQFaFKbf61nlxpoqSHI-6AyvP8V94dMKeWClkBcQdDNEQTNqNO8z8eakMiZaQ5Z1MUVDFeF92KnguUEekQu75sVABeaoSPKT-bSyUdJ5Y86OXI1s0LqXBwvUTgvJysvAHPfYZzFggzlu3WE9Unl_sbuO9eMsT3GNOkMFweDAbOHuFcbz4SeKcGZGkuMrs-_OPABiKDH8OtMyZGZgd1mJ6vYG60hQAGk7Xqo4G0QqHX2IuXrId4CUcOd2e2-whs0TxEIcPJvlKGQfn4ZWfcamVE657EVJJEclUMsex36u91Gjoz9C5MxcRK6TVhJlC_Mxyhs1zoBB6KPM98zI8c2Wg\"",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://management.azure.com/subscriptions/4c3b88c7-b886-469d-b9a8-fce396365919/resourcegroups/?api-version=2020-06-01",
+							"protocol": "https",
+							"host": [
+								"management",
+								"azure",
+								"com"
+							],
+							"path": [
+								"subscriptions",
+								"4c3b88c7-b886-469d-b9a8-fce396365919",
+								"resourcegroups",
+								""
+							],
+							"query": [
+								{
+									"key": "api-version",
+									"value": "2020-06-01"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete.ResourceGroup",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{az.bearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://management.azure.com/subscriptions/4c3b88c7-b886-469d-b9a8-fce396365919/resourcegroups/dev-nxs-eu-ccs00sh04-ne?api-version=2020-06-01",
+							"protocol": "https",
+							"host": [
+								"management",
+								"azure",
+								"com"
+							],
+							"path": [
+								"subscriptions",
+								"4c3b88c7-b886-469d-b9a8-fce396365919",
+								"resourcegroups",
+								"dev-nxs-eu-ccs00sh04-ne"
+							],
+							"query": [
+								{
+									"key": "api-version",
+									"value": "2020-06-01"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
