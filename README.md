@@ -1,10 +1,38 @@
-# az-rest-api-postman
+# Azure Rest API collection for Postman
 
-This is an Azure REST API samples for Postman API collection import. 
+This is an Azure REST API requests samples for Postman API collection import. 
 
 This collection has as reference the [Azure REST API Reference](https://docs.microsoft.com/en-us/rest/api/azure/) here you can find the endpoints, options and properties descriptions - value ones 😁 to guide us through the ☁ mission. 
 
 The collection will be updated (or at least that the plan), and maybe someday we'll have here all the Azure REST API mapped. This should be usefull if you're testing or make developments with the REST API. We love Powershell and of course, the [Azure-Cli](https://docs.microsoft.com/en-us/cli/azure/) ❤ commands that allow scripting pretty much everything. But for those that are breathing APIs and REST formats, we believe that this collection it's a must.
+
+## Current collection request index
+
+> This is a working progress project, so expect updates and probably some issues 😁☁
+<br/>
+
+```
+.
+├── Authentication
+│   └── Authentication.Login (to obtain the bearer token)
+├── API.Management.Service
+│   ├── SubcriptionKeys
+│   |   └── PUT SubcriptionsKey.CreateOrUpdate
+│   |   └── GET SubcriptionsKey.GetDetail
+│   ├── Products
+│   |   └── GET Products.ListAll
+│   |   └── PUT Products.CreateOrUpdate
+├── DataFactory
+│   ├── Pipelines
+│   |   └── POST Pipelines.TriggerPipelineRun
+│   └── GET List.DataFactories
+├── BlobStorage
+│   ├── BlobStorage.UploadFileWithTags
+├── ResourceGroups
+│   ├── GET ResourceGroups.ListAll
+│   └── DELETE ResourceGroup.DeleteByName
+└── 
+```
 
 
 ## Want to contribute?
@@ -46,4 +74,4 @@ You should get familiar with [Postman variables](https://learning.postman.com/do
 * Execute the Authentication/Auth.Login to obtain the bearer token and after a successfull response, set the environment var **az.bearerToken** to save the value and be used on other requests that requires it.
 * Set the other vars with your subcription resources data, i.e., API Management name, and so on, because these vars are required at their specific API requests.
 
-> This is a working progress project, so expect updates and probably some issues 😁☁
+
