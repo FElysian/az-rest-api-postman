@@ -6,14 +6,14 @@ This collection has as reference the [Azure REST API Reference](https://docs.mic
 
 The collection will be updated (or at least that the plan), and maybe someday we'll have here all the Azure REST API mapped. This should be usefull if you're testing or make developments with the REST API. We love Powershell and of course, the [Azure-Cli](https://docs.microsoft.com/en-us/cli/azure/) ❤ commands that allow scripting pretty much everything. But for those that are breathing APIs and REST formats, we believe that this collection it's a must.
 
----
+
 ## Want to contribute?
 
 Please 😁 the Azure REST API is pretty much extensive, and we don't have all resources type at our current hand to create the requests samples. Please feel free to contribute and open PR.
 
 Thanks to [@JoaoPedroDinis](https://github.com/JoaoPedroDinis) for his inputs and contributions 👍
 
----
+
 
 ## How to import
 
@@ -28,14 +28,14 @@ After established/authorized connection to your github account, select forked re
 
 ![github-plugin](/media/git-plugin-2.png)
 
-Select the files that you want to import:
+Select the files that you want to import. You'll find the environment vars and the collection that contains the API requests per folder per Azure service:
 
 ![github-plugin](/media/git-plugin-3.png)
 
 And after you should have a collection like this: <br/>
 ![github-plugin](/media/Imported_collection.png)
 
----
+
 
 ## How to start using this collection
 
@@ -46,4 +46,4 @@ You should get familiar with [Postman variables](https://learning.postman.com/do
 * Execute the Authentication/Auth.Login to obtain the bearer token and after a successfull response, set the environment var **az.bearerToken** to save the value and be used on other requests that requires it.
 * Set the other vars with your subcription resources data, i.e., API Management name, and so on, because these vars are required at their specific API requests.
 
-
+> This is a working progress project, so expect updates and probably some issues 😁☁
